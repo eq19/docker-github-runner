@@ -32,18 +32,12 @@ exclude:
   - jekyll-rtd-theme.gemspec
 
 # Where things are
-source              : .
 collections:
   posts:
     output          : true
 collections_dir     : .
+source              : /maps/text
 destination         : /maps/text/_site
-sass:
-  sass_dir          : /maps/text/_sass
-data_dir            : /maps/text/_data
-includes_dir        : /maps/text/_includes
-layouts_dir         : /maps/text/_layouts
-plugins_dir         : /maps/text/_plugins # takes an array of strings and loads plugins in that order
 
 # Front Matter Defaults
 defaults:
