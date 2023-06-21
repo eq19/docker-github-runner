@@ -31,14 +31,6 @@ exclude:
   - webpack.config.js
   - jekyll-rtd-theme.gemspec
 
-# Front Matter Defaults
-defaults:
-  -
-    scope:
-      path: ""
-    values:
-      layout: "default"
-
 # Where things are
 source: .
 collections_dir: .
@@ -46,3 +38,11 @@ collections:
   posts:
     output: true
 destination: ./_site
+
+# Front Matter Defaults
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
