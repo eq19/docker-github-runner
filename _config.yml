@@ -31,18 +31,18 @@ exclude:
   - webpack.config.js
   - jekyll-rtd-theme.gemspec
 
-# Where things are
-collections:
-  posts:
-    output          : true
-collections_dir     : .
-source              : /maps/text
-destination         : /maps/text/_site
-
 # Front Matter Defaults
 defaults:
   -
     scope:
-      path: "" # an empty string here means all files in the project
+      path: ""
     values:
       layout: "default"
+
+# Where things are
+source: .
+collections_dir: .
+collections:
+  posts:
+    output: true
+destination: ./_site
