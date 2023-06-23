@@ -3,11 +3,11 @@ name: Build and deploy Jekyll site
 
 # 💎 Runs on deployment targeting the default branch
 on:
-  push:
-    branches: [eQ19]
-  # workflow_run:
-    # workflows: ["pages-build-deployment"]
-    # types: [completed] #requested
+  # push:
+    # branches: [eQ19]
+  workflow_run:
+    types: [completed] #requested
+    workflows: ["pages-build-deployment"]
 
 # 🪂 Allow only one concurrent deployment across the branches
 concurrency:
@@ -20,7 +20,7 @@ permissions: write-all
 jobs:
   # Build job
   github-pages:
-    # if: github.event.workflow_run.conclusion == 'success'
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ${{ github.repository_owner != 'FeedMapping' && 'ubuntu-latest' || 'windows-latest' }}
     steps:
       - name: 📂 Checkout
