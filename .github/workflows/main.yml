@@ -3,7 +3,7 @@ name: Build and deploy eQuantum site
 
 # 💎 Runs on workflow_run.conclusion
 on:
-  # push:
+  push:
   workflow_run:
     types: [completed]
     workflows: ["pages-build-deployment"]
@@ -24,14 +24,27 @@ env:
   OWNER: ${{ github.repository_owner }}
   ACTOR: ${{ github.triggering_actor }}
   
+#defaults:
+  #run:
+    #working-directory: /github/workspace/_site
+    
 jobs:
-  # Build job
   github-pages:
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        os:
+          - 'windows-latest'
+          - 'ubuntu-latest'
+          #- 'self-hosted'
+
+    runs-on: '${{ matrix.os }}'
+    #runs-on: ${{github.ref_name != 'main' && 'ubuntu-latest' || (
+             #github.ref_protected && matrix.os || 'windows-latest') }}
+
     if: ${{github.event_name == 'push' ||
         github.event.workflow_run.conclusion == 'success'}}
-
-    runs-on: ${{github.ref_name != 'main' && 'ubuntu-latest' || (
-             github.ref_protected && 'windows-latest' || 'self-hosted') }}
 
     steps:
       - name: 💎Checkout
@@ -40,18 +53,29 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.JEKYLL_GITHUB_TOKEN }}
  
-      - name: 📂Build on Self-Hosted  
-        if: ${{runner.os != 'Linux' && runner.os != 'Windows'}}
-        uses: actions/checkout@v2
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
         with:
-          token: ${{ secrets.JEKYLL_GITHUB_TOKEN }}
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+      
+      - name: 📂Build on Self-Hosted
+        if: ${{runner.os != 'Linux' && runner.os != 'Windows'}}
+        uses: eq19/maps@v1
+        with:
+          path-to-root: /github/workspace/_site
+          include-pdf: false
 
       - name: 📂Build on Windows
         if: runner.os == 'Windows'
-        uses: eq19/parser@v1
+        uses: eq19/parser@v2
         with:
           dotnet-version: '3.1.x'
-          token: ${{ secrets.JEKYLL_GITHUB_TOKEN }}
 
       - name: 📂Feed on Linux
         if: runner.os == 'Linux'
@@ -59,10 +83,3 @@ jobs:
         with:
           pre_build_commands: 'make build'
           token: ${{ secrets.JEKYLL_GITHUB_TOKEN }}
-
-      - name: 📂Maps on Linux
-        if: runner.os == 'Linux'
-        uses: eq19/maps@v1
-        with:
-          path-to-root: /github/workspace/_site
-          include-pdf: false
