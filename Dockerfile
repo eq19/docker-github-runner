@@ -1,9 +1,9 @@
-FROM eq19/setup:latest
-LABEL version=v0.0.1
+FROM tcardonne/github-runner:latest
+#LABEL version=v0.0.1
 
-ADD . /feed
+#ADD . /feed
 
-ENV GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+#ENV GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 #ENV PATH=${PATH}:/feed/_plugins/scripts
 
 # RUN apk update && apk upgrade
