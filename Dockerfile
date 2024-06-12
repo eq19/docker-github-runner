@@ -6,8 +6,9 @@ FROM tcardonne/github-runner:latest
 #ENV GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 #ENV PATH=${PATH}:/feed/_plugins/scripts
 
-# RUN apk update && apk upgrade
+#RUN apk update && apk upgrade
 #RUN chmod -R +x /feed/_plugins/scripts
 #RUN apk add -U bash curl github-cli jq yq
 
+RUN gcloud info
 #ENTRYPOINT ["entrypoint.sh"]
