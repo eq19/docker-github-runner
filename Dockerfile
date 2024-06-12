@@ -1,14 +1,13 @@
-FROM tcardonne/github-runner:latest
-#LABEL version=v0.0.1
+FROM eq19/setup:latest
+LABEL version=v0.0.1
 
-#ADD . /feed
+ADD . /feed
 
-#ENV GIT_DISCOVERY_ACROSS_FILESYSTEM=1
-#ENV PATH=${PATH}:/feed/_plugins/scripts
+ENV GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+ENV PATH=${PATH}:/feed/scripts
 
 #RUN apk update && apk upgrade
-#RUN chmod -R +x /feed/_plugins/scripts
+RUN chmod -R +x /feed/scripts
 #RUN apk add -U bash curl github-cli jq yq
 
-RUN gcloud info
-#ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["entrypoint.sh"]
