@@ -1,5 +1,5 @@
 #FROM eq19/setup:latest
-FROM google/cloud-sdk:alpine
+FROM google/cloud-sdk:latest
 LABEL version=v0.0.1
 
 ADD . /feed
