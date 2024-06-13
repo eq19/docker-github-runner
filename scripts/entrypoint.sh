@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-echo $PATH
+gcloud info
