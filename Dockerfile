@@ -13,5 +13,5 @@
 #ENTRYPOINT ["entrypoint.sh"]
 
 FROM google/cloud-sdk:alpine
-RUN apk --update add openjdk7-jre
+#RUN apk --update add openjdk7-jre
 RUN gcloud info
